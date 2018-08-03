@@ -1,0 +1,113 @@
+<html>
+	<head>
+		<title>Class file structure</title>
+		<link rel="stylesheet" href="style.css?1">
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<!--<textarea id="ta1" rows="40" cols="100" wrap="hard">
+			A&#13;&#10;
+			B&#13;&#10;
+			C&#13;&#10;
+		</textarea>-->
+
+		<table border="1">
+			<tr>
+				<td>HEX</td>
+				<td>Interpretation</td>
+				<td>Class file structure</td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td></td>
+				<td>ClassFile {</td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td></td>
+				<td>
+					u4 			 magic;<br>
+					u2 			 minor version;<br>
+					u2 			 major version;<br>
+					u2 			 constant_pool_count;<br>
+					cp_info 			 constant_pool[constant_pool_count-1];<br>
+					u2 			 access_flags;<br>
+					u2 			 this_class;<br>
+					u2 			 super_class;<br>
+					u2 			 interfaces_count;<br>
+					u2 			 interfaces[interfaces_count];<br>
+					u2 			 fields_count;<br>
+					field_info 			 fields[fields_count];<br>
+					u2 			 methods_count;<br>
+					method_info 			 methods[methods_count];<br>
+					u2 			 attributes_count;<br>
+					attribute_info 			 attributes[attributes_count];<br>
+				</td>
+			</tr>
+
+			<tr>
+				<td></td>
+				<td></td>
+				<td>}</td>
+			</tr>
+		</table>
+
+		<div id="uploads"></div>
+
+		<div class="main">
+			<div class="container">
+				<div class="hexdataview">
+					<div class="dropzone" id="dropzone">Drop files here to upload</div>
+					<p id="viewzone"></p>
+				</div>
+			</div>
+		</div>
+		<script>
+			(function(){
+				
+				var dropzone = document.getElementById('dropzone');
+
+                var upload = function (files) {
+                    var formData = new FormData(),
+                        xhr = new XMLHttpRequest(),
+                        x;
+
+                    for(x = 0; x < files.length; x = x + 1) {
+                        formData.append('file[]', files[x]);
+                    }
+
+                    xhr.onload = function(){
+                        var data = this.responseText;
+                        //вывести в нужную область
+                        //console.log(data);
+                        var viewzone = document.getElementById('viewzone');
+                        viewzone.innerHTML = "";
+                        viewzone.innerHTML = data;
+                    }
+
+                    xhr.open('post', 'uploadFiles');
+                    xhr.send(formData);
+                }
+
+				dropzone.ondrop = function(e) {
+					e.preventDefault();
+					this.className = 'dropzone';
+					upload(e.dataTransfer.files);
+				}
+				
+				dropzone.ondragover = function() {
+					this.className = 'dropzone dragover';
+					return false;
+				}
+				
+				dropzone.ondragleave = function() {
+					this.className = 'dropzone';
+					return false;
+				}
+				
+			}());
+		</script>
+	</body>
+</html>

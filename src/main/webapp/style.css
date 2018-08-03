@@ -1,0 +1,58 @@
+body {
+    font-family: "Arial", sans-serif;
+}
+
+.dropzone {
+    height:80px;
+    border:2px dashed #ccc;
+    color:#ccc;
+    line-height:80px;
+    text-align:center;
+}
+
+.dropzone.dragover {
+    border-color:#000;
+    color:#000;
+}
+
+#pagetitle {
+    text-align: center;
+}
+#submitarea {
+    text-align: center;
+}
+
+.main {}
+
+.container {
+    width: 100%;
+    max-width: 1024px; /*максимальная ширина*/
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+.hexdataview {}
+
+.feedback {
+    text-align: justify;
+}
+.wide {
+    overflow: hidden;
+}
+.name-input {
+    border: 1px solid #dadada;
+    display: block;
+    height: 20px;
+    width: 100%;
+}
+
+.comment-area {
+    border: 1px solid #dadada;
+    display: block;
+    height: 120px;
+    width: 100%;
+}
+
+.bttn {
+    height: 25px;
+}

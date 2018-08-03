@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<title>HexView</title>
+		<link rel="stylesheet" href="style.css?1">
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div id="uploads"></div>
+
+		<div class="main">
+			<div class="container">
+				<a href="/bytecode">class-file parse (jvms8)</a>
+				<div class="hexdataview">
+					<div class="dropzone" id="dropzone">Drop files here to upload</div>
+					<p id="viewzone"></p>
+				</div>
+			</div>
+		</div>
+		<script>
+			(function(){
+				
+				var dropzone = document.getElementById('dropzone');
+
+                var upload = function (files) {
+                    var formData = new FormData(),
+                        xhr = new XMLHttpRequest(),
+                        x;
+
+                    for(x = 0; x < files.length; x = x + 1) {
+                        formData.append('file[]', files[x]);
+                    }
+
+                    xhr.onload = function(){
+                        var data = this.responseText;
+                        //вывести в нужную область
+                        //console.log(data);
+                        var viewzone = document.getElementById('viewzone');
+                        viewzone.innerHTML = "";
+                        viewzone.innerHTML = data;
+                    }
+
+                    xhr.open('post', 'uploadFiles');
+                    xhr.send(formData);
+                }
+
+				dropzone.ondrop = function(e) {
+					e.preventDefault();
+					this.className = 'dropzone';
+					upload(e.dataTransfer.files);
+				}
+				
+				dropzone.ondragover = function() {
+					this.className = 'dropzone dragover';
+					return false;
+				}
+				
+				dropzone.ondragleave = function() {
+					this.className = 'dropzone';
+					return false;
+				}
+				
+			}());
+		</script>
+	</body>
+</html>

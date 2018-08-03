@@ -1,0 +1,68 @@
+<html>
+	<head>
+		<title>HTML5 drag&drop upload example</title>
+		<link rel="stylesheet" href="style.css?1">
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div>
+			<form method="POST" action="uploadFile" enctype="multipart/form-data">
+				File to upload: <input type="file" name="file"><br/> <input type="submit" value="Upload"> Press here to upload the file!
+			</form>
+		</div>
+		<div id="uploads"></div>
+		<div class="dropzone" id="dropzone">Drop files here to upload</div>
+		<div class="main">
+			<div class="container">
+				<div class="hexdataview">
+					<p id="viewzone"></p>
+				</div>
+			</div>
+		</div>
+		<script>
+			(function(){
+				
+				var dropzone = document.getElementById('dropzone');
+
+                var upload = function (files) {
+                    var formData = new FormData(),
+                        xhr = new XMLHttpRequest(),
+                        x;
+
+                    for(x = 0; x < files.length; x = x + 1) {
+                        formData.append('file[]', files[x]);
+                    }
+
+                    xhr.onload = function(){
+                        var data = this.responseText;
+                        //вывести в нужную область
+                        var viewzone = document.getElementById('viewzone');
+                        viewzone.innerHTML = "";
+                        viewzone.innerHTML = data;
+                        console.log(data);
+                    }
+
+                    xhr.open('post', 'uploadFiles');
+                    xhr.send(formData);
+                }
+
+				dropzone.ondrop = function(e) {
+					e.preventDefault();
+					this.className = 'dropzone';
+					upload(e.dataTransfer.files);
+				}
+				
+				dropzone.ondragover = function() {
+					this.className = 'dropzone dragover';
+					return false;
+				}
+				
+				dropzone.ondragleave = function() {
+					this.className = 'dropzone';
+					return false;
+				}
+				
+			}());
+		</script>
+	</body>
+</html>
